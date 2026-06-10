@@ -1,0 +1,166 @@
+:root {
+  --bg: #080808;
+  --bg-card: #101010;
+  --bg-form: #0e0e0e;
+  --accent: #c8952a;
+  --accent-hover: #e0a830;
+  --text: #e0e0e0;
+  --text-muted: #555;
+  --border: #1a1a1a;
+  --font: "Courier New", Courier, monospace;
+  --accent-loki: #4a9e6b;
+  --accent-loki-dim: #1a3d2b;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+}
+
+/* UTILS */
+.ls-wide {
+  letter-spacing: 0.15em;
+}
+.accent-text {
+  color: var(--accent);
+}
+
+/* NAVBAR */
+.navbar {
+  background: rgba(8, 8, 8, 0.95) !important;
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+}
+.navbar-brand {
+  font-size: 1rem;
+  letter-spacing: 0.35em;
+}
+.nav-link {
+  color: var(--text-muted) !important;
+  font-size: 0.78rem;
+}
+.nav-link:hover {
+  color: var(--text) !important;
+}
+
+/* HERO */
+.hero-banner {
+  min-height: 92vh;
+  background:
+    linear-gradient(
+      to top,
+      #080808 0%,
+      rgba(8, 8, 8, 0.4) 50%,
+      rgba(8, 8, 8, 0.1) 100%
+    ),
+    url("https://apod.nasa.gov/apod/image/2401/M31_HubbleSpitzerGalex_2000.jpg")
+      center/cover no-repeat;
+}
+.hero-eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.4em;
+}
+.hero-eyebrow {
+  color: var(--accent-loki);
+}
+.hero-title {
+  font-size: clamp(3rem, 8vw, 7rem);
+  font-weight: 200;
+  line-height: 1;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+.hero-sub {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  letter-spacing: 0.05em;
+}
+
+/* SECTION LABEL */
+.section-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  letter-spacing: 0.35em;
+}
+
+/* FILTER BUTTONS */
+.btn-filter {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  font-family: var(--font);
+}
+.btn-filter:hover,
+.btn-filter.active {
+  background: transparent;
+}
+.btn-filter:hover,
+.btn-filter.active {
+  border-color: var(--accent-loki);
+  color: var(--accent-loki);
+}
+
+/* AMBER BUTTON */
+.btn-amber {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-family: var(--font);
+  font-size: 0.78rem;
+  letter-spacing: 0.15em;
+  transition: all 0.2s;
+}
+.btn-amber:hover {
+  background: var(--accent);
+  color: #000;
+}
+
+/* FORM */
+.form-card {
+  background: var(--bg-form);
+  border: 1px solid var(--border);
+}
+.form-label-custom {
+  font-size: 0.72rem;
+  letter-spacing: 0.25em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+.form-control-dark {
+  background: #0a0a0a;
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 0.85rem;
+  border-radius: 0;
+}
+.form-control-dark:focus {
+  background: #0a0a0a;
+  border-color: var(--accent);
+  color: var(--text);
+  box-shadow: none;
+}
+.form-control-dark::placeholder {
+  color: var(--text-muted);
+}
+.form-select.form-control-dark option {
+  background: #0a0a0a;
+}
+
+/* SECTIONS */
+.page-section {
+  display: none;
+}
+.page-section.active {
+  display: block;
+}
+
+.loki-text {
+  color: var(--accent-loki);
+}
