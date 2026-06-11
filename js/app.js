@@ -1,5 +1,6 @@
 // All elements with a data-section attribute (navbar links + New Entry button)
 const dataSections = document.querySelectorAll("[data-section]");
+const API_KEY = 'z32DB3PKfhVuRYd0KOskotkHIBBW0fC8IjgVMzd9';
 
 // Attach click listeners to all navigation triggers
 function initNavigation() {
@@ -25,9 +26,9 @@ function getFormValues() {
 
 // Handle form submission: save, re-render, navigate, clear
 function initForm() {
-    document.querySelector('#save-entry-btn').addEventListener('click', () => {
+    document.querySelector('#save-entry-btn').addEventListener('click', async () => {
         const entry = getFormValues();
-        saveEntry(entry);
+        await saveEntry(entry);
         displayEntries();
         showSection('log');
         clearForm();
@@ -48,8 +49,11 @@ function showSection(id) {
 }
 
 // Append entry to existing localStorage array, or create array if none exists
-function saveEntry(entry) {
+async function saveEntry(entry) {
     const arr = getEntries();
+    const APODData = await fetchAPOD(entry.date);
+    // Append the APOD data to the entry
+    entry = {...entry, ...APODData};
     arr.push(entry);
     localStorage.setItem('nexusEntries', JSON.stringify(arr));
 }
@@ -69,7 +73,10 @@ function displayEntries() {
         div.classList.add('col-md-4');
         div.innerHTML = `
       <div class="card h-100">
-        <div style="height: 200px; background: #111;"></div>
+        ${entry.imageUrl && !entry.imageUrl.includes('youtube') ?
+            // Handles if the URL contains YouTube and not the image
+            `<img src="${entry.imageUrl}" alt="${entry.title}" style="width:100%; height:200px; object-fit:cover;"/>` :
+            `<div style="height:200px; background:#111"></div>`}
         <div class="card-body">
           <span class="badge mb-2">${entry.objectType}</span>
           <h5 class="card-title">${entry.objectName}</h5>
@@ -80,6 +87,22 @@ function displayEntries() {
     `;
         entryGrid.appendChild(div);
     });
+}
+
+// Fetch NASA APOD API Data to display APOD
+async function fetchAPOD(date) {
+    try {
+        const APODRes = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${API_KEY}&date=${date}`);
+        const APOD = await APODRes.json();
+        return {
+            imageUrl: APOD.url,
+            title: APOD.title,
+            explanation: APOD.explanation
+        };
+    } catch (err) {
+        console.error('APOD fetch failed:', err);
+        return {imageUrl: null, title: null, explanation: null};
+    }
 }
 
 initNavigation();
