@@ -187,6 +187,7 @@ body {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 0;
+    cursor: pointer;
 }
 
 .card-title {
@@ -198,4 +199,49 @@ body {
 .card-text {
     font-size: 0.78rem;
     color: var(--text-muted);
+}
+
+/* Detailed view styles */
+.detail-title {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 200;
+    letter-spacing: 0.05em;
+    color: var(--text);
+}
+
+.detail-meta {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    letter-spacing: 0.2em;
+}
+
+.detail-notes {
+    background: #0e0e0e;
+    border-left: 2px solid var(--accent);
+    padding: 1.5rem;
+}
+
+.detail-notes-text {
+    font-size: 0.88rem;
+    color: var(--text);
+    line-height: 1.8;
+    margin: 0;
+}
+
+.detail-divider {
+    border-color: var(--border);
+}
+
+.detail-apod-title {
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    color: var(--text);
+}
+
+.detail-apod-explanation {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.9;
+    max-width: 720px;
 }
