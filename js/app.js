@@ -126,6 +126,12 @@ function renderCard(e) {
           onclick="showSection('log')">
           Back to Timeline
         </button>
+        
+        <!-- Delete Button -->
+        <button class="btn btn-outline-danger btn-sm mb-5 ls-wide text-uppercase"
+          onclick="deleteEntry(${entry.id})">
+          Delete Entry
+        </button>
 
         <!-- Object name& type -->
         <div class="d-flex align-items-center gap-3 mb-2">
@@ -170,6 +176,15 @@ async function fetchAPOD(date) {
         console.error('APOD fetch failed:', err);
         return {imageUrl: null, title: null, explanation: null};
     }
+}
+
+// Remove entry by id, persist the updated array, and return to the timeline
+function deleteEntry(id) {
+    const entries = getEntries().filter(entry => entry.id !== Number(id));
+
+    localStorage.setItem('nexusEntries', JSON.stringify(entries));
+    displayEntries();
+    showSection('log');
 }
 
 initNavigation();
