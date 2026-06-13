@@ -84,6 +84,7 @@ function displayEntries() {
         entries.forEach((entry) => {
             const div = document.createElement('div');
             div.classList.add('col-md-4');
+            div.dataset.id = entry.id;
             div.innerHTML = `
       <div class="card h-100">
         ${entry.imageUrl && !entry.imageUrl.includes('youtube') ?
@@ -98,8 +99,60 @@ function displayEntries() {
         </div>
       </div>
     `;
+            div.addEventListener('click', renderCard);
             entryGrid.appendChild(div);
         });
+    }
+}
+
+function renderCard(e) {
+    const entryId = e.currentTarget.dataset.id;
+    const entry = getEntries().find((e) => e.id === Number(entryId));
+
+    if (entry) {
+        showSection('entry-detail');
+        document.querySelector('#entry-detail-container').innerHTML = `
+      <!-- Full-width APOD image -->
+      ${entry.imageUrl && !entry.imageUrl.includes('youtube')
+            ? `<img src="${entry.imageUrl}" alt="${entry.title}"
+            style="width:100%; height:420px; object-fit:cover; display:block;"/>`
+            : `<div style="height:420px; background:#111;"></div>`
+        }
+
+      <div class="container py-5">
+
+        <!-- Back button -->
+        <button class="btn btn-outline-secondary btn-sm mb-5 ls-wide text-uppercase"
+          onclick="showSection('log')">
+          Back to Timeline
+        </button>
+
+        <!-- Object name& type -->
+        <div class="d-flex align-items-center gap-3 mb-2">
+          <span class="badge">${entry.objectType}</span>
+          <h1 class="detail-title mb-0">${entry.objectName}</h1>
+        </div>
+
+        <!-- Date& location -->
+        <p class="detail-meta mb-5">
+          ${entry.date}
+          ${entry.location ? `&nbsp;·&nbsp;${entry.location}` : ''}
+        </p>
+
+        <!-- User notes -->
+        <div class="detail-notes mb-5">
+          <p class="section-label mb-2">Observer Notes</p>
+          <p class="detail-notes-text">${entry.notes}</p>
+        </div>
+
+        <hr class="detail-divider mb-5" />
+
+        <!-- APOD section -->
+        <p class="section-label mb-2">NASA: Astronomy Picture of the Day</p>
+        <h4 class="detail-apod-title mb-3">${entry.title ?? 'Unavailable'}</h4>
+        <p class="detail-apod-explanation">${entry.explanation ?? 'No data fetched for this date.'}</p>
+      </div>
+    `;
     }
 }
 
