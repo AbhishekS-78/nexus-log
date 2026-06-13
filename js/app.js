@@ -43,6 +43,10 @@ function clearForm() {
 
 // Hide all sections, then show the one matching the given id
 function showSection(id) {
+    // Show hero banner on log view, hide it on all other sections
+    document.querySelector('#hero-banner').classList.toggle('d-none', id !== 'log');
+
+    // Deactivate all sections, then activate the target
     document.querySelectorAll(".page-section")
         .forEach((section) => section.classList.remove("active"));
     document.querySelector(`#${id}`).classList.add("active");
@@ -68,15 +72,24 @@ function getEntries() {
 function displayEntries() {
     const entryGrid = document.querySelector('#entries-grid');
     entryGrid.innerHTML = '';
-    getEntries().forEach((entry) => {
-        const div = document.createElement('div');
-        div.classList.add('col-md-4');
-        div.innerHTML = `
+
+    const entries = getEntries();
+
+    // If the entries are empty, hide the cards
+    if (entries.length === 0) {
+        document.querySelector('#no-entries').classList.remove('d-none');
+    } else {
+        document.querySelector('#no-entries').classList.add('d-none');
+
+        entries.forEach((entry) => {
+            const div = document.createElement('div');
+            div.classList.add('col-md-4');
+            div.innerHTML = `
       <div class="card h-100">
         ${entry.imageUrl && !entry.imageUrl.includes('youtube') ?
-            // Handles if the URL contains YouTube and not the image
-            `<img src="${entry.imageUrl}" alt="${entry.title}" style="width:100%; height:200px; object-fit:cover;"/>` :
-            `<div style="height:200px; background:#111"></div>`}
+                // Handles if the URL contains YouTube and not the image
+                `<img src="${entry.imageUrl}" alt="${entry.title}" style="width:100%; height:200px; object-fit:cover;"/>` :
+                `<div style="height:200px; background:#111"></div>`}
         <div class="card-body">
           <span class="badge mb-2">${entry.objectType}</span>
           <h5 class="card-title">${entry.objectName}</h5>
@@ -85,8 +98,9 @@ function displayEntries() {
         </div>
       </div>
     `;
-        entryGrid.appendChild(div);
-    });
+            entryGrid.appendChild(div);
+        });
+    }
 }
 
 // Fetch NASA APOD API Data to display APOD
