@@ -41,6 +41,27 @@ function clearForm() {
         .forEach((id) => document.querySelector(id).value = '');
 }
 
+// Initialize filter buttons and handle filtering of entries by object type
+function initFilters() {
+    const filterEls = document.querySelectorAll('[data-filter]');
+
+    filterEls.forEach((el) => el.addEventListener('click', (e) => {
+        // Mark clicked button as active, remove active from all others
+        document.querySelectorAll('[data-filter]').forEach(btn => btn.classList.remove('active'));
+        e.currentTarget.classList.add('active');
+
+        const filter = e.currentTarget.dataset.filter;
+
+        // Show all entries or filter by object type
+        if (filter === 'all') {
+            displayEntries();
+        } else {
+            const entries = getEntries().filter(entry => entry.objectType === filter);
+            displayEntries(entries);
+        }
+    }));
+}
+
 // Hide all sections, then show the one matching the given id
 function showSection(id) {
     // Show hero banner on log view, hide it on all other sections
@@ -69,19 +90,19 @@ function getEntries() {
 }
 
 // Clear grid and re-render all entries as cards from localStorage
-function displayEntries() {
+function displayEntries(entries = null) {
     const entryGrid = document.querySelector('#entries-grid');
     entryGrid.innerHTML = '';
 
-    const entries = getEntries();
+    const data = entries ?? getEntries();
 
     // If the entries are empty, hide the cards
-    if (entries.length === 0) {
+    if (data.length === 0) {
         document.querySelector('#no-entries').classList.remove('d-none');
     } else {
         document.querySelector('#no-entries').classList.add('d-none');
 
-        entries.forEach((entry) => {
+        data.forEach((entry) => {
             const div = document.createElement('div');
             div.classList.add('col-md-4');
             div.dataset.id = entry.id;
@@ -190,3 +211,4 @@ function deleteEntry(id) {
 initNavigation();
 initForm();
 displayEntries();
+initFilters();
