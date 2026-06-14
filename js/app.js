@@ -1,6 +1,6 @@
 // All elements with a data-section attribute (navbar links + New Entry button)
 const dataSections = document.querySelectorAll("[data-section]");
-const API_KEY = 'z32DB3PKfhVuRYd0KOskotkHIBBW0fC8IjgVMzd9';
+const API_KEY = 'your_api_key';
 
 // Attach click listeners to all navigation triggers
 function initNavigation() {
@@ -128,7 +128,7 @@ function displayEntries(entries = null) {
 
 function renderCard(e) {
     const entryId = e.currentTarget.dataset.id;
-    const entry = getEntries().find((e) => e.id === Number(entryId));
+    const entry = getEntries().find((entry) => entry.id === Number(entryId));
 
     if (entry) {
         showSection('entry-detail');
@@ -208,6 +208,25 @@ function deleteEntry(id) {
     showSection('log');
 }
 
+function showParticles() {
+    tsParticles.load("tsparticles", {
+        background: {color: {value: "#080808"}},
+        particles: {
+            number: {value: 120},
+            color: {value: "#fff"},
+            opacity: {value: {min: 0.1, max: 0.5}},
+            size: {value: {min: 0.5, max: 1.5}},
+            move: {
+                enable: true,
+                speed: 0.2,
+                direction: "none",
+                random: true,
+            },
+        },
+    });
+}
+
+showParticles();
 initNavigation();
 initForm();
 displayEntries();

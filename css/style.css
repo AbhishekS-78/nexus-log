@@ -178,10 +178,6 @@ body {
     display: block;
 }
 
-.loki-text {
-    color: var(--accent-loki);
-}
-
 /* Cards */
 .card {
     background: var(--bg-card);
@@ -244,4 +240,13 @@ body {
     color: var(--text-muted);
     line-height: 1.9;
     max-width: 720px;
+}
+
+#tsparticles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
 }
